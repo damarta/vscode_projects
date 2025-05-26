@@ -1,0 +1,100 @@
+[
+  {
+    "date": "2025-05-21  12:20:00",
+    "exercises": [
+      {
+        "type": "StrengthExercise",
+        "name": "Bench Press",
+        "sets": 6,
+        "reps": 10,
+        "weight": 60
+      },
+      {
+        "type": "StrengthExercise",
+        "name": "Squat",
+        "sets": 6,
+        "reps": 10,
+        "weight": 80
+      },
+      {
+        "type": "CardioExercise",
+        "name": "Running",
+        "duration": 20,
+        "distance": 3.0
+      }
+    ]
+  },
+  {
+    "date": "2025-05-21  14:17:59",
+    "exercises": [
+      {
+        "type": "StrengthExercise",
+        "name": "Bench Press",
+        "sets": 6,
+        "reps": 10,
+        "weight": 60
+      },
+      {
+        "type": "StrengthExercise",
+        "name": "Squat",
+        "sets": 6,
+        "reps": 10,
+        "weight": 80
+      },
+      {
+        "type": "CardioExercise",
+        "name": "Running",
+        "duration": 20,
+        "distance": 3.0
+      }
+    ]
+  },
+  {
+    "date": "2025-05-21  14:18:23",
+    "exercises": [
+      {
+        "type": "StrengthExercise",
+        "name": "Bench Press",
+        "sets": 6,
+        "reps": 10,
+        "weight": 60
+      },
+      {
+        "type": "StrengthExercise",
+        "name": "Squat",
+        "sets": 6,
+        "reps": 10,
+        "weight": 80
+      },
+      {
+        "type": "CardioExercise",
+        "name": "Running",
+        "duration": 20,
+        "distance": 3.0
+      }
+    ]
+  },
+  {
+    "type": "Strength",
+    "name": "Bench Press",
+    "date": "2025-05-21 14-05-01",
+    "sets": 6,
+    "reps": 10,
+    "weight": 60.0
+  },
+  {
+    "type": "Strength",
+    "name": "Squat",
+    "date": "2025-05-21 14-05-23",
+    "sets": 6,
+    "reps": 10,
+    "weight": 60.0
+  },
+  {
+    "type": "Cardio",
+    "name": "rune",
+    "date": "2025-05-21 14-05-47",
+    "duration": 20,
+    "distance": 3.0
+  }
+]

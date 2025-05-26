@@ -1,0 +1,12 @@
+[
+    {
+        "name": "Luis",
+        "age": 29,
+        "membership_tier": "Gold"
+    },
+    {
+        "name": "Benthe",
+        "age": 27,
+        "membership_tier": "Platinum"
+    }
+]

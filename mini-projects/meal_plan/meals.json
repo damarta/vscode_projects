@@ -1,0 +1,8 @@
+
+{
+    "_comment": "This is the meals:",
+    
+  "breakfast": ["Oatmeal", "Smoothie", "Protein Pancake", "Boiled eggs", "Greek yogurt"],
+  "lunch": ["Chicken wrap", "Sushi", "Grilled tofu", "Veggie bowl", "Tuna pasta"],
+  "dinner": ["Steak", "Chickpea curry", "Salmon", "Pizza", "Stuffed peppers"]
+}
