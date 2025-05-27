@@ -1,18 +1,22 @@
 [
   {
     "name": "Code",
-    "done": false
+    "done": true
   },
   {
     "name": "gym",
-    "done": false
+    "done": true
   },
   {
     "name": "more code",
-    "done": false
+    "done": true
   },
   {
     "name": "morning doggy walk",
     "done": true
+  },
+  {
+    "name": "Read $100M",
+    "done": false
   }
 ]
