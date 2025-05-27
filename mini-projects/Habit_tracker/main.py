@@ -11,7 +11,7 @@ from habit import Habit
 
 
 # 💬 What this means: This create a constant variable that defines your file name.
-DATA_FILE = "habits.json"
+DATA_FILE = os.path.join(os.path.dirname(__file__), "habits.json")
 
 # -- step 1: Load JSON data --
 
