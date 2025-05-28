@@ -1,5 +1,16 @@
 # This file is the blueprint for every habit.
 
+
+def log_action(func):
+    def wrapper(*args, **kwargs):
+        print(f"🔍 Running {func._name__}...")
+        result = func(*args, **kwargs)
+
+        print(f"✅ Finished {func.__name__}")
+        return result
+    return wrapper
+
+
 class Habit:
 
     def __init__(self, name, done=False):
@@ -26,13 +37,3 @@ class Habit:
         return cls(data["name"], data["done"])
 
  # 💬 What this means:
-
-
-def log_action(func):
-    def wrapper(*args, **kwargs):
-        print(f"🔍 Running {func._name__}...")
-        result = func(*args, **kwargs)
-
-        print(f"✅ Finished {func.__name__}")
-        return result
-    return wrapper
