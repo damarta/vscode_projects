@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+/Library/
+/System/
+/Applications/
+/Users/
+
+# Python
+__pycache__/
+*.pyc
+*.sqlite3
+*.log
+.env
+
+# Backup/Temp
+*copy/
