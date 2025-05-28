@@ -1,16 +1,16 @@
 # This file is the blueprint for every habit.
 
-
+# == LOG DECORATOR (must be defined before it's used) ==
 def log_action(func):
     def wrapper(*args, **kwargs):
-        print(f"🔍 Running {func._name__}...")
+        print(f"⚙️ Running {func.__name__}...")
         result = func(*args, **kwargs)
-
         print(f"✅ Finished {func.__name__}")
         return result
     return wrapper
 
 
+# == HABIT CLASS ==
 class Habit:
 
     def __init__(self, name, done=False):
