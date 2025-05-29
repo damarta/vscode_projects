@@ -50,7 +50,7 @@ def main():
         habits.sort(key=lambda h: h.name)
     else:  # Priority sorting
         priority_order = {"red": 0, "orange": 1, "green": 2}
-        habits.sort(key=lambda h: priority_order[h.priority])
+        habits.sort(key=lambda h: priority_order.get(h.priority, 3))
 
     st.header("Your Habits")
 
