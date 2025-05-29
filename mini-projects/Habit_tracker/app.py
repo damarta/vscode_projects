@@ -32,8 +32,8 @@ def display_habits(habits, goals):
 
 def display_daily_goals(daily_goals, goals):
     for day in daily_goals:
-        with st.expander(f"Day: {day.date}"):
-            display_habits(day.habits, goals)
+        st.markdown(f"#### Day: {day.date}")
+        display_habits(day.habits, goals)
 
 
 def display_weekly_goals(weekly_goals, goals):
