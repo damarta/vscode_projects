@@ -13,5 +13,30 @@
     "name": "Fixe Gym Planner App",
     "done": false,
     "priority": "\ud83d\udfe2"
+  },
+  {
+    "name": "Morning Walk With Kai And Venus",
+    "done": false,
+    "priority": "red"
+  },
+  {
+    "name": "Afternoon Walk With Kai And Venus",
+    "done": false,
+    "priority": "orange"
+  },
+  {
+    "name": "Gym",
+    "done": false,
+    "priority": "orange"
+  },
+  {
+    "name": "Stretch",
+    "done": false,
+    "priority": "green"
+  },
+  {
+    "name": "Clean The Kitchen",
+    "done": false,
+    "priority": "green"
   }
 ]
