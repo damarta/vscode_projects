@@ -34,10 +34,40 @@ def main():
         st.subheader(
             f"{priority_colors[priority]} {priority.title()} Priority Habits")
         for i, habit in enumerate([h for h in habits if h.priority == priority]):
-            done = st.checkbox(habit.name, value=habit.done,
-                               key=f"{priority}_habit_{i}")
+            # checkbox, name, edit, delete
+            cols = st.columns([0.05, 0.7, 0.1, 0.1])
+            done = cols[0].checkbox("", value=habit.done,
+                                    key=f"{priority}_done_{i}")
             if done != habit.done:
                 habit.done = done
+                save_habits(habits)
+                st.rerun()
+
+            # Editable name
+            if f"{priority}_edit_{i}" not in st.session_state:
+                st.session_state[f"{priority}_edit_{i}"] = False
+
+            if st.session_state[f"{priority}_edit_{i}"]:
+                new_name = cols[1].text_input("Edit Habit Name", value=habit.name,
+                                              key=f"{priority}_name_input_{i}")
+                if cols[2].button("Save", key=f"{priority}_save_{i}"):
+                    if new_name.strip():
+                        habit.name = new_name.strip().title()
+                        save_habits(habits)
+                        st.session_state[f"{priority}_edit_{i}"] = False
+                        st.rerun()
+                if cols[3].button("Cancel", key=f"{priority}_cancel_{i}"):
+                    st.session_state[f"{priority}_edit_{i}"] = False
+                    st.experimental_rerun()
+            else:
+                cols[1].markdown(habit.name)
+
+                if cols[2].button("Edit", key=f"{priority}_edit_{i}"):
+                    st.session_state[f"{priority}_edit_{i}"] = True
+                    st.experimental_rerun()
+
+            if cols[3].button("Delete", key=f"{priority}_delete_{i}"):
+                habits.remove(habit)
                 save_habits(habits)
                 st.rerun()
 
