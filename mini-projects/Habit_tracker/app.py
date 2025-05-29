@@ -27,9 +27,13 @@ def main():
     habits = load_habits()
 
     st.header("Your Habits")
-    for habit in habits:
-        status = "✅" if habit.done else "❌"
-        st.write(f"{status} {habit.name} [{habit.priority}]")
+
+    for i, habit in enumerate(habits):
+        done = st.checkbox(habit.name, value=habit.done, key=f"habit_{i}")
+        if done != habit.done:
+            habits[i].done = done
+            save_habits(habits)
+            st.rerun()
 
     new_habit_name = st.text_input("Add a new habit")
     if st.button("Add Habit") and new_habit_name.strip():
