@@ -63,6 +63,16 @@ def main():
 
     display_monthly_goals(goals)
 
+    # Temporary: export clean JSON file for readability testing
+    all_habits = []
+    for month in goals:
+        for week in month.weekly_goals:
+            for day in week.daily_goals:
+                all_habits.extend(day.habits)
+
+    with open("demo_export.json", "w") as f:
+        json.dump([h.to_dict() for h in all_habits], f, indent=2)
+
 
 if __name__ == "__main__":
     main()
