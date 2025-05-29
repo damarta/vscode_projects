@@ -1,22 +1,7 @@
 [
   {
-    "name": "Code",
-    "done": true
-  },
-  {
-    "name": "gym",
-    "done": true
-  },
-  {
-    "name": "more code",
-    "done": true
-  },
-  {
-    "name": "morning doggy walk",
-    "done": true
-  },
-  {
-    "name": "Read $100M",
-    "done": false
+    "name": "Morning Walk With Kai And Venus",
+    "done": false,
+    "priority": "green"
   }
 ]
