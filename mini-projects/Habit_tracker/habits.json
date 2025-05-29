@@ -1,47 +1,63 @@
 [
-  {
-    "name": "Morning Walk With Kai And Venus",
-    "done": true,
-    "priority": "green"
-  },
-  {
-    "name": "Fixe Habit Tracker App",
-    "done": true,
-    "priority": "\ud83d\udfe2"
-  },
-  {
-    "name": "Fixe Gym Planner App",
-    "done": false,
-    "priority": "\ud83d\udfe2"
-  },
-  {
-    "name": "Morning Walk With Kai And Venus",
-    "done": true,
-    "priority": "red"
-  },
-  {
-    "name": "Afternoon Walk With Kai And Venus",
-    "done": true,
-    "priority": "orange"
-  },
-  {
-    "name": "Gym",
-    "done": false,
-    "priority": "orange"
-  },
-  {
-    "name": "Stretch",
-    "done": false,
-    "priority": "green"
-  },
-  {
-    "name": "Clean The Kitchen",
-    "done": true,
-    "priority": "green"
-  },
-  {
-    "name": "Prepare Next Day {Code + Calendar }",
-    "done": false,
-    "priority": "red"
-  }
+    {
+        "month": 5,
+        "year": 2025,
+        "weekly_goals": [
+            {
+                "week_number": 22,
+                "daily_goals": [
+                    {
+                        "date": "2025-05-29",
+                        "habits": [
+                            {
+                                "name": "Morning Walk With Kai And Venus",
+                                "done": true,
+                                "priority": "red"
+                            },
+                            {
+                                "name": "Prepare Next Day {Code + Calendar }",
+                                "done": false,
+                                "priority": "red"
+                            },
+                            {
+                                "name": "Afternoon Walk With Kai And Venus",
+                                "done": true,
+                                "priority": "orange"
+                            },
+                            {
+                                "name": "Gym",
+                                "done": false,
+                                "priority": "orange"
+                            },
+                            {
+                                "name": "Morning Walk With Kai And Venus",
+                                "done": true,
+                                "priority": "green"
+                            },
+                            {
+                                "name": "Stretch",
+                                "done": false,
+                                "priority": "green"
+                            },
+                            {
+                                "name": "Clean The Kitchen",
+                                "done": true,
+                                "priority": "green"
+                            },
+                            {
+                                "name": "Fix Habit Tracker App",
+                                "done": true,
+                                "priority": "green"
+                            },
+                            {
+                                "name": "Fix Gym Planner App",
+                                "done": false,
+                                "priority": "green"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
 ]
