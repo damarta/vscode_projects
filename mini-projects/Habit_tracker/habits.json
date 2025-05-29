@@ -16,12 +16,12 @@
   },
   {
     "name": "Morning Walk With Kai And Venus",
-    "done": false,
+    "done": true,
     "priority": "red"
   },
   {
     "name": "Afternoon Walk With Kai And Venus",
-    "done": false,
+    "done": true,
     "priority": "orange"
   },
   {
@@ -36,7 +36,12 @@
   },
   {
     "name": "Clean The Kitchen",
-    "done": false,
+    "done": true,
     "priority": "green"
+  },
+  {
+    "name": "Prepare Next Day {Code + Calendar }",
+    "done": false,
+    "priority": "red"
   }
 ]
