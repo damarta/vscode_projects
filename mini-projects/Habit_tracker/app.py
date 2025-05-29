@@ -19,34 +19,58 @@ def save_goals(goals):
         json.dump([g.to_dict() for g in goals], f, indent=2)
 
 
+def flatten_habits(goals):
+    all_habits = []
+    for month in goals:
+        for week in month.weekly_goals:
+            for day in week.daily_goals:
+                all_habits.extend(day.habits)
+    return all_habits
+
+
 def display_habits(habits, goals):
     priority_colors = {"red": "🔴", "orange": "🟠", "green": "🟢"}
+
+    # Initialize edit_mode dict if not exists
+    if 'edit_mode' not in st.session_state:
+        st.session_state.edit_mode = {}
+
     for i, habit in enumerate(habits):
-        done = st.checkbox(f"{priority_colors.get(habit.priority, '⚪')} {habit.name}",
-                           value=habit.done, key=f"habit_{habit.name}_{i}")
+        cols = st.columns([0.05, 0.7, 0.1, 0.1])
+        done = cols[0].checkbox("", value=habit.done, key=f"done_{i}")
         if done != habit.done:
             habit.done = done
             save_goals(goals)
             st.rerun()
 
+        # Display priority emoji next to habit name
+        display_name = f"{priority_colors.get(habit.priority, '⚪')} {habit.name}"
 
-def display_daily_goals(daily_goals, goals):
-    for day in daily_goals:
-        st.markdown(f"#### Day: {day.date}")
-        display_habits(day.habits, goals)
+        edit_key = f"habit_{i}"
 
+        if st.session_state.edit_mode.get(edit_key, False):
+            new_name = cols[1].text_input("Edit Habit Name", value=habit.name,
+                                          key=f"name_input_{i}")
+            if cols[2].button("Save", key=f"save_{i}"):
+                if new_name.strip():
+                    habit.name = new_name.strip().title()
+                    save_goals(goals)
+                    st.session_state.edit_mode[edit_key] = False
+                    st.rerun()
+            if cols[3].button("Cancel", key=f"cancel_{i}"):
+                st.session_state.edit_mode[edit_key] = False
+                st.rerun()
+        else:
+            cols[1].markdown(display_name)
 
-def display_weekly_goals(weekly_goals, goals):
-    for week in weekly_goals:
-        # st.markdown(f"### Week {week.week_number}")  # Commented out for future use
-        display_daily_goals(week.daily_goals, goals)
+            if cols[2].button("Edit", key=f"edit_{i}"):
+                st.session_state.edit_mode[edit_key] = True
+                st.rerun()
 
-
-def display_monthly_goals(monthly_goals):
-    for month in monthly_goals:
-        with st.expander(f"Month: {month.month}/{month.year}"):
-            # st.markdown("## Weekly Goals")  # Commented out for future use
-            display_weekly_goals(month.weekly_goals, monthly_goals)
+        if cols[3].button("Delete", key=f"delete_{i}"):
+            habits.remove(habit)
+            save_goals(goals)
+            st.rerun()
 
 
 def main():
@@ -61,15 +85,40 @@ def main():
     if not goals:
         st.info("No goals found. Please add goals in the JSON file.")
 
-    display_monthly_goals(goals)
+    # Sidebar filters and sorting
+    with st.sidebar:
+        st.header("Filter Habits")
+
+        status_filter = st.selectbox(
+            "Status", ["All", "Done", "Not Done"], index=0)
+        priority_filter = st.selectbox(
+            "Priority", ["All", "Red", "Orange", "Green"], index=0)
+        sort_option = st.selectbox("Sort by", ["Priority", "Name"], index=0)
+
+    all_habits = flatten_habits(goals)
+
+    # Apply filters
+    if status_filter == "Done":
+        filtered = [h for h in all_habits if h.done]
+    elif status_filter == "Not Done":
+        filtered = [h for h in all_habits if not h.done]
+    else:
+        filtered = all_habits
+
+    if priority_filter != "All":
+        filtered = [h for h in filtered if h.priority ==
+                    priority_filter.lower()]
+
+    # Apply sorting
+    if sort_option == "Name":
+        filtered.sort(key=lambda h: h.name)
+    else:
+        priority_order = {"red": 0, "orange": 1, "green": 2}
+        filtered.sort(key=lambda h: priority_order.get(h.priority, 3))
+
+    display_habits(filtered, goals)
 
     # Temporary: export clean JSON file for readability testing
-    all_habits = []
-    for month in goals:
-        for week in month.weekly_goals:
-            for day in week.daily_goals:
-                all_habits.extend(day.habits)
-
     with open("demo_export.json", "w") as f:
         json.dump([h.to_dict() for h in all_habits], f, indent=2)
 
