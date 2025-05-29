@@ -38,13 +38,14 @@ def display_daily_goals(daily_goals, goals):
 
 def display_weekly_goals(weekly_goals, goals):
     for week in weekly_goals:
-        with st.expander(f"Week {week.week_number}"):
-            display_daily_goals(week.daily_goals, goals)
+        st.markdown(f"### Week {week.week_number}")
+        display_daily_goals(week.daily_goals, goals)
 
 
 def display_monthly_goals(monthly_goals):
     for month in monthly_goals:
         with st.expander(f"Month: {month.month}/{month.year}"):
+            st.markdown("## Weekly Goals")
             display_weekly_goals(month.weekly_goals, monthly_goals)
 
 
