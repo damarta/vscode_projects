@@ -58,13 +58,13 @@ def main():
                         st.rerun()
                 if cols[3].button("Cancel", key=f"{priority}_cancel_{i}"):
                     st.session_state[f"{priority}_edit_{i}"] = False
-                    st.experimental_rerun()
+                    st.rerun()
             else:
                 cols[1].markdown(habit.name)
 
                 if cols[2].button("Edit", key=f"{priority}_edit_{i}"):
                     st.session_state[f"{priority}_edit_{i}"] = True
-                    st.experimental_rerun()
+                    st.rerun()
 
             if cols[3].button("Delete", key=f"{priority}_delete_{i}"):
                 habits.remove(habit)
