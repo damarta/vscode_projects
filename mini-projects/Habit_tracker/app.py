@@ -38,19 +38,23 @@ def display_daily_goals(daily_goals, goals):
 
 def display_weekly_goals(weekly_goals, goals):
     for week in weekly_goals:
-        st.markdown(f"### Week {week.week_number}")
+        # st.markdown(f"### Week {week.week_number}")  # Commented out for future use
         display_daily_goals(week.daily_goals, goals)
 
 
 def display_monthly_goals(monthly_goals):
     for month in monthly_goals:
         with st.expander(f"Month: {month.month}/{month.year}"):
-            st.markdown("## Weekly Goals")
+            # st.markdown("## Weekly Goals")  # Commented out for future use
             display_weekly_goals(month.weekly_goals, monthly_goals)
 
 
 def main():
-    st.title("Habit Tracker with Goal Hierarchy")
+    st.title("📋 Habit Tracker")
+    st.caption("Track your daily progress below.")
+    st.markdown("---")
+
+    st.header("📅 Daily Goals")
 
     goals = load_goals()
 
