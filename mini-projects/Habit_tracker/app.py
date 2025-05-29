@@ -43,27 +43,29 @@ def main():
                 save_habits(habits)
                 st.rerun()
 
-            # Editable name
-            if f"{priority}_edit_{i}" not in st.session_state:
-                st.session_state[f"{priority}_edit_{i}"] = False
+            # Initialize edit_mode dict if not exists
+            if 'edit_mode' not in st.session_state:
+                st.session_state.edit_mode = {}
 
-            if st.session_state[f"{priority}_edit_{i}"]:
+            edit_key = f"{priority}_{i}"
+
+            if st.session_state.edit_mode.get(edit_key, False):
                 new_name = cols[1].text_input("Edit Habit Name", value=habit.name,
                                               key=f"{priority}_name_input_{i}")
                 if cols[2].button("Save", key=f"{priority}_save_{i}"):
                     if new_name.strip():
                         habit.name = new_name.strip().title()
                         save_habits(habits)
-                        st.session_state[f"{priority}_edit_{i}"] = False
+                        st.session_state.edit_mode[edit_key] = False
                         st.rerun()
                 if cols[3].button("Cancel", key=f"{priority}_cancel_{i}"):
-                    st.session_state[f"{priority}_edit_{i}"] = False
+                    st.session_state.edit_mode[edit_key] = False
                     st.rerun()
             else:
                 cols[1].markdown(habit.name)
 
                 if cols[2].button("Edit", key=f"{priority}_edit_{i}"):
-                    st.session_state[f"{priority}_edit_{i}"] = True
+                    st.session_state.edit_mode[edit_key] = True
                     st.rerun()
 
             if cols[3].button("Delete", key=f"{priority}_delete_{i}"):
