@@ -2,6 +2,20 @@ import streamlit as st
 import json
 import os
 from datetime import datetime, timedelta
+import random
+
+QUOTES = [
+    "Keep going, you're doing great!",
+    "Discipline beats motivation every time.",
+    "A promise to yourself is the most powerful kind.",
+    "Small steps every day lead to big results.",
+    "Stay consistent. You're building a new identity.",
+    "You kept your word today. That's powerful.",
+    "Today you chose growth. Respect.",
+    "Win the day. That's all it takes.",
+    "Brick by brick, you're building the new you.",
+    "One day at a time. You’ve got this."
+]
 
 DATA_FILE = "data/promise_data.json"
 
@@ -49,6 +63,7 @@ else:
             data["checkins"].append(today.strftime("%Y-%m-%d"))
             save_data(data)
             st.success("Check-in saved!")
+            st.info(random.choice(QUOTES))
 
     # Calendar tracker
     st.subheader("📅 Your 30-Day Promise Calendar")
