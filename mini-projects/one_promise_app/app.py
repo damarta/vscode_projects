@@ -12,9 +12,9 @@ def load_data():
             with open(DATA_FILE, "r") as f:
                 return json.load(f)
         except json.JSONDecodeError:
-            return {"promise": "", "start_date": "", "checkins": []}
+            return {"promise": "", "start_date": "", "checkins": [], "reset_count": 0}
     else:
-        return {"promise": "", "start_date": "", "checkins": []}
+        return {"promise": "", "start_date": "", "checkins": [], "reset_count": 0}
 
 
 def save_data(data):
@@ -33,6 +33,7 @@ if not data["promise"]:
         data["promise"] = promise
         data["start_date"] = datetime.now().strftime("%Y-%m-%d")
         data["checkins"] = []
+        data["reset_count"] = data.get("reset_count", 0)
         save_data(data)
         st.success("Promise saved!")
 else:
@@ -76,7 +77,12 @@ else:
 
     # Reset Option
     st.subheader("🔁 Reset Your Promise")
+    st.caption(f"Resets used: {data.get('reset_count', 0)} / 3")
     if st.button("Start Over"):
-        data = {"promise": "", "start_date": "", "checkins": []}
-        save_data(data)
-        st.warning("Your promise has been reset. Please refresh the page.")
+        if data.get("reset_count", 0) < 3:
+            data = {"promise": "", "start_date": "", "checkins": [],
+                    "reset_count": data.get("reset_count", 0) + 1}
+            save_data(data)
+            st.warning("Your promise has been reset. Please refresh the page.")
+        else:
+            st.error("❌ You have reached the maximum number of restarts (3).")
