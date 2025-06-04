@@ -36,12 +36,16 @@ DATA_FILE = "data/promise_data.json"
 def load_data():
     if os.path.exists(DATA_FILE):
         try:
+            return_data = None
             with open(DATA_FILE, "r") as f:
-                return json.load(f)
+                return_data = json.load(f)
+            if "quote_history" not in return_data:
+                return_data["quote_history"] = []
+            return return_data
         except json.JSONDecodeError:
-            return {"promise": "", "start_date": "", "checkins": [], "reset_count": 0}
+            return {"promise": "", "start_date": "", "checkins": [], "reset_count": 0, "quote_history": []}
     else:
-        return {"promise": "", "start_date": "", "checkins": [], "reset_count": 0}
+        return {"promise": "", "start_date": "", "checkins": [], "reset_count": 0, "quote_history": []}
 
 
 def save_data(data):
@@ -64,6 +68,7 @@ if not data["promise"]:
         data["start_date"] = datetime.now().strftime("%Y-%m-%d")
         data["checkins"] = []
         data["reset_count"] = data.get("reset_count", 0)
+        data["quote_history"] = data.get("quote_history", [])
         save_data(data)
         st.success("Promise saved!")
 else:
@@ -80,6 +85,13 @@ else:
             save_data(data)
             st.success("Check-in saved!")
             st.session_state.quote = fetch_quote()
+            if "quote_history" not in data:
+                data["quote_history"] = []
+            data["quote_history"].append({
+                "date": today.strftime("%Y-%m-%d"),
+                "quote": st.session_state.quote
+            })
+            save_data(data)
 
     if today.strftime("%Y-%m-%d") in data["checkins"] and st.session_state.quote:
         st.subheader("💬 Motivation of the Day")
@@ -119,13 +131,21 @@ else:
         st.balloons()
         st.success("🎉 Congratulations! You've completed your 30-day promise.")
 
+    # Quote History Display
+    st.subheader("📚 Quote History")
+    if data.get("quote_history"):
+        for item in reversed(data["quote_history"][-5:]):
+            st.markdown(f"**{item['date']}** — _{item['quote']}_")
+    else:
+        st.info("No quote history yet.")
+
     # Reset Option
     st.subheader("🔁 Reset Your Promise")
     st.caption(f"Resets used: {data.get('reset_count', 0)} / 4")
     if st.button("Start Over"):
         if data.get("reset_count", 0) < 4:
             data = {"promise": "", "start_date": "", "checkins": [],
-                    "reset_count": data.get("reset_count", 0) + 1}
+                    "reset_count": data.get("reset_count", 0) + 1, "quote_history": []}
             save_data(data)
             st.warning("Your promise has been reset. Please refresh the page.")
         else:
