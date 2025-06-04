@@ -66,3 +66,17 @@ else:
             cols[i % 6].warning(f"🔸 {label}")
         else:
             cols[i % 6].info(f"⬜ {label}")
+
+    # Progress Summary
+    st.subheader("📊 Progress Summary")
+    total_days = 30
+    completed_days = len(data["checkins"])
+    st.progress(completed_days / total_days)
+    st.info(f"✅ {completed_days} / {total_days} days completed")
+
+    # Reset Option
+    st.subheader("🔁 Reset Your Promise")
+    if st.button("Start Over"):
+        data = {"promise": "", "start_date": "", "checkins": []}
+        save_data(data)
+        st.warning("Your promise has been reset. Please refresh the page.")
