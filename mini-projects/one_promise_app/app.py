@@ -114,6 +114,11 @@ else:
     st.progress(completed_days / total_days)
     st.info(f"✅ {completed_days} / {total_days} days completed")
 
+    # Check if user completed all 30 days
+    if completed_days == total_days:
+        st.balloons()
+        st.success("🎉 Congratulations! You've completed your 30-day promise.")
+
     # Reset Option
     st.subheader("🔁 Reset Your Promise")
     st.caption(f"Resets used: {data.get('reset_count', 0)} / 4")
