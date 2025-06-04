@@ -22,7 +22,7 @@ def save_data(data):
         json.dump(data, f, indent=2)
 
 
-# Load and setup
+# Load data
 st.title("🎯 One Promise")
 data = load_data()
 
@@ -36,30 +36,33 @@ if not data["promise"]:
         save_data(data)
         st.success("Promise saved!")
 else:
-    # Show progress
+    # Show promise + day count
     start_date = datetime.strptime(data["start_date"], "%Y-%m-%d")
     today = datetime.now().date()
     days_passed = (today - start_date.date()).days + 1
     st.success(f"Your Promise: *{data['promise']}* (Day {days_passed} of 30)")
 
-    # Check-in section
+    # Check-in button
     if today.strftime("%Y-%m-%d") not in data["checkins"]:
         if st.button("✅ I did it today!"):
             data["checkins"].append(today.strftime("%Y-%m-%d"))
             save_data(data)
             st.success("Check-in saved!")
 
-    # Show Calendar Grid
+    # Calendar tracker
     st.subheader("📅 Your 30-Day Promise Calendar")
     cols = st.columns(6)
+
     for i in range(30):
         day = start_date + timedelta(days=i)
         label = day.strftime("%d %b")
-        if day.strftime("%Y-%m-%d") in data["checkins"]:
+        day_str = day.strftime("%Y-%m-%d")
+
+        if day_str in data["checkins"]:
             cols[i % 6].success(f"✔️ {label}")
-        elif day < today:
+        elif day.date() < today:
             cols[i % 6].error(f"❌ {label}")
-        elif day == today:
+        elif day.date() == today:
             cols[i % 6].warning(f"🔸 {label}")
         else:
             cols[i % 6].info(f"⬜ {label}")
