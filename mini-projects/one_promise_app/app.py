@@ -3,6 +3,19 @@ import json
 import os
 from datetime import datetime, timedelta
 import random
+import requests
+
+
+def fetch_quote():
+    try:
+        response = requests.get("https://zenquotes.io/api/random")
+        if response.status_code == 200:
+            return response.json()[0]['q'] + " — " + response.json()[0]['a']
+        else:
+            return random.choice(QUOTES)  # fallback to local
+    except:
+        return random.choice(QUOTES)
+
 
 QUOTES = [
     "Keep going, you're doing great!",
