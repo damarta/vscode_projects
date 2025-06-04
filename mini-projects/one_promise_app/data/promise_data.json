@@ -1,8 +1,15 @@
 {
-  "promise": "APP",
-  "start_date": "2025-06-04",
-  "checkins": [
-    "2025-06-04"
-  ],
-  "reset_count": 4
+    "promise": "APP",
+    "start_date": "2025-06-04",
+    "checkins": [
+        "",
+        "2025-06-04"
+    ],
+    "reset_count": 0,
+    "quote_history": [
+        {
+            "date": "2025-06-04",
+            "quote": "Respect was invented to cover the empty place where love should be. \u2014 Leo Tolstoy"
+        }
+    ]
 }

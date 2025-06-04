@@ -57,6 +57,8 @@ def save_data(data):
 st.title("🎯 One Promise")
 data = load_data()
 
+mode = st.sidebar.radio("🧘 App Mode", ["Default Mode", "Focus Mode"])
+
 if "quote" not in st.session_state:
     st.session_state.quote = ""
 
@@ -101,52 +103,55 @@ else:
         st.info(
             "📝 No quote yet. Click '✅ I did it today!' to unlock today’s motivation.")
 
-    # Calendar tracker
-    st.subheader("📅 Your 30-Day Promise Calendar")
-    cols = st.columns(6)
+    if mode == "Default Mode":
+        # Calendar tracker
+        st.subheader("📅 Your 30-Day Promise Calendar")
+        cols = st.columns(6)
 
-    for i in range(30):
-        day = start_date + timedelta(days=i)
-        label = day.strftime("%d %b")
-        day_str = day.strftime("%Y-%m-%d")
+        for i in range(30):
+            day = start_date + timedelta(days=i)
+            label = day.strftime("%d %b")
+            day_str = day.strftime("%Y-%m-%d")
 
-        if day_str in data["checkins"]:
-            cols[i % 6].success(f"✔️ {label}")
-        elif day.date() < today:
-            cols[i % 6].error(f"❌ {label}")
-        elif day.date() == today:
-            cols[i % 6].warning(f"🔸 {label}")
+            if day_str in data["checkins"]:
+                cols[i % 6].success(f"✔️ {label}")
+            elif day.date() < today:
+                cols[i % 6].error(f"❌ {label}")
+            elif day.date() == today:
+                cols[i % 6].warning(f"🔸 {label}")
+            else:
+                cols[i % 6].info(f"⬜ {label}")
+
+        # Progress Summary
+        st.subheader("📊 Progress Summary")
+        total_days = 30
+        completed_days = len(data["checkins"])
+        st.progress(completed_days / total_days)
+        st.info(f"✅ {completed_days} / {total_days} days completed")
+
+        # Check if user completed all 30 days
+        if completed_days == total_days:
+            st.balloons()
+            st.success(
+                "🎉 Congratulations! You've completed your 30-day promise.")
+
+        # Quote History Display
+        st.subheader("📚 Quote History")
+        if data.get("quote_history"):
+            for item in reversed(data["quote_history"][-5:]):
+                st.markdown(f"**{item['date']}** — _{item['quote']}_")
         else:
-            cols[i % 6].info(f"⬜ {label}")
+            st.info("No quote history yet.")
 
-    # Progress Summary
-    st.subheader("📊 Progress Summary")
-    total_days = 30
-    completed_days = len(data["checkins"])
-    st.progress(completed_days / total_days)
-    st.info(f"✅ {completed_days} / {total_days} days completed")
-
-    # Check if user completed all 30 days
-    if completed_days == total_days:
-        st.balloons()
-        st.success("🎉 Congratulations! You've completed your 30-day promise.")
-
-    # Quote History Display
-    st.subheader("📚 Quote History")
-    if data.get("quote_history"):
-        for item in reversed(data["quote_history"][-5:]):
-            st.markdown(f"**{item['date']}** — _{item['quote']}_")
-    else:
-        st.info("No quote history yet.")
-
-    # Reset Option
-    st.subheader("🔁 Reset Your Promise")
-    st.caption(f"Resets used: {data.get('reset_count', 0)} / 4")
-    if st.button("Start Over"):
-        if data.get("reset_count", 0) < 4:
-            data = {"promise": "", "start_date": "", "checkins": [],
-                    "reset_count": data.get("reset_count", 0) + 1, "quote_history": []}
-            save_data(data)
-            st.warning("Your promise has been reset. Please refresh the page.")
-        else:
-            st.error("❌ You have reached the maximum number of restarts (4).")
+        # Reset Option
+        st.subheader("🔁 Reset Your Promise")
+        st.caption(f"Resets used: {data.get('reset_count', 0)} / 4")
+        if st.button("Start Over"):
+            if data.get("reset_count", 0) < 4:
+                data = {"promise": "", "start_date": "", "checkins": [],
+                        "reset_count": data.get("reset_count", 0) + 1, "quote_history": []}
+                save_data(data)
+                st.warning(
+                    "Your promise has been reset. Please refresh the page.")
+            else:
+                st.error("❌ You have reached the maximum number of restarts (4).")
