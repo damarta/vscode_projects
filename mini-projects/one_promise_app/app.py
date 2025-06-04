@@ -41,11 +41,13 @@ def load_data():
                 return_data = json.load(f)
             if "quote_history" not in return_data:
                 return_data["quote_history"] = []
+            if "user_name" not in return_data:
+                return_data["user_name"] = ""
             return return_data
         except json.JSONDecodeError:
-            return {"promise": "", "start_date": "", "checkins": [], "reset_count": 0, "quote_history": []}
+            return {"promise": "", "start_date": "", "checkins": [], "reset_count": 0, "quote_history": [], "user_name": ""}
     else:
-        return {"promise": "", "start_date": "", "checkins": [], "reset_count": 0, "quote_history": []}
+        return {"promise": "", "start_date": "", "checkins": [], "reset_count": 0, "quote_history": [], "user_name": ""}
 
 
 def save_data(data):
@@ -57,12 +59,20 @@ def save_data(data):
 st.title("🎯 One Promise")
 data = load_data()
 
-mode = st.sidebar.radio("🧘 App Mode", ["Default Mode", "Focus Mode"])
+st.sidebar.markdown("### 🧭 Choose Your Focus")
+mode = st.sidebar.radio("View", ["🧠 Full View", "🧘 Focus Mode"])
+if mode == "🧠 Full View":
+    st.sidebar.caption(
+        "See your full progress, quote history, and reset options.")
+else:
+    st.sidebar.caption("Minimal view to help you focus on your daily promise.")
 
 if "quote" not in st.session_state:
     st.session_state.quote = ""
 
 if not data["promise"]:
+    st.subheader("Before we begin, what's your name?")
+    name = st.text_input("Your name")
     st.subheader("Set your 30-day promise:")
     promise = st.text_input("What's the one thing you’ll commit to?")
     if st.button("Lock in my promise"):
@@ -71,6 +81,7 @@ if not data["promise"]:
         data["checkins"] = []
         data["reset_count"] = data.get("reset_count", 0)
         data["quote_history"] = data.get("quote_history", [])
+        data["user_name"] = name
         save_data(data)
         st.success("Promise saved!")
 else:
@@ -78,7 +89,15 @@ else:
     start_date = datetime.strptime(data["start_date"], "%Y-%m-%d")
     today = datetime.now().date()
     days_passed = (today - start_date.date()).days + 1
-    st.success(f"Your Promise: *{data['promise']}* (Day {days_passed} of 30)")
+    greeting = f"{data['user_name']}, your promise:" if data.get(
+        "user_name") else "Your Promise:"
+    st.success(f"{greeting} *{data['promise']}* (Day {days_passed} of 30)")
+
+    # Share Your Promise section
+    st.subheader("🔗 Share Your Promise")
+    share_text = f"{data.get('user_name', 'I')} committed to: '{data['promise']}' for 30 days using the One Promise App!"
+    st.code(share_text)
+    st.caption("Copy and share your challenge with friends or social media.")
 
     # Check-in button
     if today.strftime("%Y-%m-%d") not in data["checkins"]:
@@ -103,7 +122,7 @@ else:
         st.info(
             "📝 No quote yet. Click '✅ I did it today!' to unlock today’s motivation.")
 
-    if mode == "Default Mode":
+    if mode == "🧠 Full View":
         # Calendar tracker
         st.subheader("📅 Your 30-Day Promise Calendar")
         cols = st.columns(6)

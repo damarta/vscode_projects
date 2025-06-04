@@ -1,15 +1,15 @@
 {
-    "promise": "APP",
-    "start_date": "2025-06-04",
-    "checkins": [
-        "",
-        "2025-06-04"
-    ],
-    "reset_count": 0,
-    "quote_history": [
-        {
-            "date": "2025-06-04",
-            "quote": "Respect was invented to cover the empty place where love should be. \u2014 Leo Tolstoy"
-        }
-    ]
+  "promise": "Create app",
+  "start_date": "2025-06-04",
+  "checkins": [
+    "2025-06-04"
+  ],
+  "reset_count": 2,
+  "quote_history": [
+    {
+      "date": "2025-06-04",
+      "quote": "We are all faced with a series of great opportunities brilliantly disguised as impossible situations.  \u2014 Charles Swindoll"
+    }
+  ],
+  "user_name": "Luis"
 }
