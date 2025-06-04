@@ -1,7 +1,8 @@
 {
-  "promise": "Create App",
+  "promise": "APP",
   "start_date": "2025-06-04",
   "checkins": [
     "2025-06-04"
-  ]
+  ],
+  "reset_count": 4
 }

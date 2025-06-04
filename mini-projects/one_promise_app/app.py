@@ -53,6 +53,9 @@ def save_data(data):
 st.title("🎯 One Promise")
 data = load_data()
 
+if "quote" not in st.session_state:
+    st.session_state.quote = ""
+
 if not data["promise"]:
     st.subheader("Set your 30-day promise:")
     promise = st.text_input("What's the one thing you’ll commit to?")
@@ -76,7 +79,15 @@ else:
             data["checkins"].append(today.strftime("%Y-%m-%d"))
             save_data(data)
             st.success("Check-in saved!")
-            st.info(random.choice(QUOTES))
+            st.session_state.quote = fetch_quote()
+
+    if today.strftime("%Y-%m-%d") in data["checkins"] and st.session_state.quote:
+        st.subheader("💬 Motivation of the Day")
+        st.info(f"**{st.session_state.quote}**")
+    else:
+        st.subheader("💬 Motivation of the Day")
+        st.info(
+            "📝 No quote yet. Click '✅ I did it today!' to unlock today’s motivation.")
 
     # Calendar tracker
     st.subheader("📅 Your 30-Day Promise Calendar")
@@ -105,12 +116,12 @@ else:
 
     # Reset Option
     st.subheader("🔁 Reset Your Promise")
-    st.caption(f"Resets used: {data.get('reset_count', 0)} / 3")
+    st.caption(f"Resets used: {data.get('reset_count', 0)} / 4")
     if st.button("Start Over"):
-        if data.get("reset_count", 0) < 3:
+        if data.get("reset_count", 0) < 4:
             data = {"promise": "", "start_date": "", "checkins": [],
                     "reset_count": data.get("reset_count", 0) + 1}
             save_data(data)
             st.warning("Your promise has been reset. Please refresh the page.")
         else:
-            st.error("❌ You have reached the maximum number of restarts (3).")
+            st.error("❌ You have reached the maximum number of restarts (4).")
